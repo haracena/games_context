@@ -1,93 +1,39 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { listGamesGet } from '../../constants/constants.js';
 import Game from '../game/game.component';
 import { Link } from 'react-router-dom';
 
-class Games extends React.Component {
+const Games = () => {
+    const [listGames, setListGames] = useState([]);
 
-    state = {
-        listaJuegos: []
-    }
+    useEffect(() => {
+        getData();
+    }, [])
 
-    componentDidMount() {
-        this.getData();
-    }
-
-    getData = () => {
+    const getData = () => {
         fetch(listGamesGet())
             .then(response => response.json())
             .then(({ results }) => {
                 console.log(results);
-                this.setState({
-                    listaJuegos: results
-                })
+                setListGames([...results]);
             });
     }
 
-    botonConsola = () => {
-        console.log(this.state.listaJuegos);
-    }
-
-    render() {
-        return (
-            <div>
-                <ul>
-                    {
-                        this.state.listaJuegos.map(juego => (
-                            <Link key={juego['id']} to={`/game/details/${juego['id']}`}>
-                                <Game
-                                    name={juego['name']}
-                                    backgroundImage={juego['background_image']}
-                                />
-                            </Link>
-                        ))
-                    }
-                </ul>
-            </div>
-        );
-    }
+    return (
+        <div>
+            {
+                listGames.map(game => (
+                    <Link key={game['id']} to={`/game/details/${game['id']}`}>
+                        <Game
+                            name={game['name']}
+                            backgroundImage={game['background_image']}
+                        />
+                    </Link>
+                ))
+            }
+        </div>
+    );
 }
 
-
-
-// const Games = () => {
-
-//     return(<h1>function component</h1>);
-// }
-
 export default Games;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { Fragment, useContext } from 'react';
-// import { GameContext } from '../contexts/GameContext';
-
-// const Games = () => {
-//     const { doneFetch, games } = useContext(GameContext);
-//     return (
-//         <Fragment>
-//             {
-//                 <div>hola mundo</div>
-//             }
-//         </Fragment>
-//     );
-// }
-
-// Games.displayName = 'Games';
-// export default Games;

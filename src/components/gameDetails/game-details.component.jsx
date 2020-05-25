@@ -1,43 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { gameDetailsGet } from '../../constants/constants';
+import './game-details.style.css';
 
-class GameDetails extends React.Component {
+const GameDetails = () => {
+    const [game, setGame] = useState({});
 
-    state = {
-        name: '',
-        description: '',
-        screenshots: null
-    }
+    useEffect(() => {
+        getData();
+    },[])
 
-    componentDidMount() {
-        this.getData();
-    }
-
-    getData = () => {
+    const getData = () => {
         const game_id = window.location.pathname.split('/')[3];
         fetch(gameDetailsGet(game_id))
             .then(res => res.json())
-            .then(({ name, description }) => {
-                this.setState({
-                    name,
-                    description
-                })
+            .then(({ name, description, background_image }) => {
+                setGame({ name, description, background_image, screenshot: null });
             })
     }
 
-
-
-    render(){
-        return(
+    return (
+        <div>
             <div>
-                <h1>{ this.state.name }</h1>
-                <p>{ this.state.description }</p>
-                {
-                    this.screenshots != null ? <img></img> : <span>no hay screenshoots</span>
-                }
+                <img className="bg-img" src={ game.background_image } alt={ `${game.name} background image` }/>
             </div>
-        )
-    }
+            <h1>{ game.name }</h1>
+            <p dangerouslySetInnerHTML={{ __html: game.description }}></p>
+            {
+                game.screenshots != null ? <img></img> : <span><strong>no hay screenshoots</strong></span>
+            }
+        </div>
+    );
 }
 
 export default GameDetails;
