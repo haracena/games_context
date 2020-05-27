@@ -1,36 +1,27 @@
 
-import React, { useState, useEffect } from 'react';
-import { listGamesGet } from '../../constants/constants.js';
+import React, { useContext } from 'react';
 import Game from '../game/game.component';
 import { Link } from 'react-router-dom';
+import { GameContext } from '../../contexts/GameContext.js';
+import SearchForm from '../searchForm/search-form.component';
 
 const Games = () => {
-    const [listGames, setListGames] = useState([]);
-
-    useEffect(() => {
-        getData();
-    }, [])
-
-    const getData = () => {
-        fetch(listGamesGet())
-            .then(response => response.json())
-            .then(({ results }) => {
-                console.log(results);
-                setListGames([...results]);
-            });
-    }
-
+    const { doneGamesFetch, games } = useContext(GameContext);
+    
     return (
         <div>
+            <SearchForm />
             {
-                listGames.map(game => (
-                    <Link key={game['id']} to={`/game/details/${game['id']}`}>
-                        <Game
-                            name={game['name']}
-                            backgroundImage={game['background_image']}
-                        />
-                    </Link>
-                ))
+                doneGamesFetch
+                    ? (games.map(game => (
+                        <Link key={game['id']} to={`/game/details/${game['id']}`}>
+                            <Game
+                                name={game['name']}
+                                backgroundImage={game['background_image']}
+                            />
+                        </Link>
+                    )))
+                    : <span><strong>Cargando juegos...</strong></span>
             }
         </div>
     );

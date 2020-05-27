@@ -8,8 +8,11 @@ const trailers = 'movies'; // https://api.rawg.io/api/games/{id}/movies
 const suggested = 'suggested'; // https://api.rawg.io/api/games/{id}/suggested
 const genres = 'genres'; // https://api.rawg.io/api/genres
 const platforms = 'platforms' // https://api.rawg.io/api/platforms
-// details of game https://api.rawg.io/api/games/{id}
 
 export const listGamesGet = () => `${base_url}/${games}`;
 
 export const gameDetailsGet = (idGame) => `${base_url}/${games}/${idGame}`;
+
+export const searchGameGet =  (nameGame) => `${base_url}/${games}?search=${nameGame}`;
+
+export const screenshotsGet = (idGame) => `${base_url}/${games}/${idGame}/${screenshots}`;
