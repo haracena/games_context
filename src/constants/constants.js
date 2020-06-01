@@ -16,3 +16,5 @@ export const gameDetailsGet = (idGame) => `${base_url}/${games}/${idGame}`;
 export const searchGameGet =  (nameGame) => `${base_url}/${games}?search=${nameGame}`;
 
 export const screenshotsGet = (idGame) => `${base_url}/${games}/${idGame}/${screenshots}`;
+
+export const suggestedGamesGet = (idGame) => `${base_url}/${games}/${idGame}/${suggested}`;

@@ -1,19 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Games from './components/games/games.component';
-import GameDetails from './components/gameDetails/game-details.component';
+import HomePage from './components/pages/homePage/home-page.component'
 import GameContextProvider from './contexts/GameContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import GameDetailsPage from './components/pages/gameDetailsPage/game-details-page.component';
 
 const App = () => (
   <BrowserRouter>
     <Switch>
       <GameContextProvider>
         <Route exact path='/'>
-          <Games />
+          <HomePage />
         </Route>
         <Route path='/game/details/:game_id'>
-          <GameDetails />
+          <GameDetailsPage />
         </Route>
       </GameContextProvider>
     </Switch>

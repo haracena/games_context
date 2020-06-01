@@ -1,0 +1,17 @@
+.bg-card{
+    background-color: #202020;
+}
+
+.title-card{
+    color: whitesmoke;
+}
+
+.card{
+    border-color: #202020;
+    transition: 0.8s;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 1px 1px 1px #151515;
+}

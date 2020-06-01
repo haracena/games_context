@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { GameContext } from '../../contexts/GameContext';
+import { GameContext } from '../../../contexts/GameContext';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -19,16 +19,12 @@ const SearchForm = () => {
     }
 
     return (
-
-        <div className='form'>
-            <InputGroup>
-                <FormControl placeholder='Nombre del juego' onChange={handleChange} />
-                <InputGroup.Append>
-                    <Button onClick={handleSubmit} variant='dark' size='sm'>Buscar</Button>
-                </InputGroup.Append>
-            </InputGroup>
-        </div>
-        // <input type='text' onChange={handleChange} />
+        <InputGroup>
+            <FormControl placeholder='Nombre del juego' onChange={handleChange} />
+            <InputGroup.Append>
+                <Button onClick={handleSubmit} variant='dark' size='sm'>Buscar</Button>
+            </InputGroup.Append>
+        </InputGroup>
     );
 }
 
