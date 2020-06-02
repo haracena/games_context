@@ -6,7 +6,7 @@ import Loading from '../loading/loading.component';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import GenreButtons from '../genreButtons/genre-buttons.component';
 
 const GameDetails = ({ actualGame }) => {
     const { doneDetailFetch, gameDetail, getGameDetails } = useContext(GameContext);
@@ -24,7 +24,10 @@ const GameDetails = ({ actualGame }) => {
                         doneDetailFetch ?
                             <div>
                                 <Image className='max-height' src={gameDetail.background_image} alt={`${gameDetail.name} image`} fluid />
-                                <h1 className='mb-lg-3 mt-lg-4'>{gameDetail.name}</h1>
+                                <h1 className='mb-lg-1 mt-lg-4 d-inline-block'>{`${gameDetail.name} (${gameDetail.released})`}</h1>
+                                {
+                                    gameDetail.genres && <GenreButtons genres={ gameDetail.genres } id={ gameDetail.id } />
+                                }
                                 <p dangerouslySetInnerHTML={{ __html: gameDetail.description }}></p>
                             </div>
                             :

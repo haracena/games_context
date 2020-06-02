@@ -5,7 +5,7 @@ export const GameContext = createContext();
 
 const GameContextProvider = ({ children }) => {
     const [doneGamesFetch, setDoneGamesFetch] = useState(false);
-    const [games, setGames] = useState([]);
+    const [games, setGames] = useState({ results: [], next: '' });
 
     const [doneDetailFetch, setDoneDetailFetch] = useState(false);
     const [gameDetail, setGameDetail] = useState({});
@@ -17,7 +17,6 @@ const GameContextProvider = ({ children }) => {
     const [suggestedGames, setSuggestedGames] = useState([]);
 
     const [doneNextGamesFetch, setDoneNextGamesFetch] = useState(null);
-    const [nextGames, setNextGames] = useState('');
 
     useEffect(() => {
         getListGames();
@@ -31,8 +30,7 @@ const GameContextProvider = ({ children }) => {
             .then(res => res.json())
             .then(({ results, next }) => {
                 setDoneGamesFetch(true);
-                setGames(results);
-                setNextGames(next);
+                setGames({results, next});
             })
             .catch((err) => {
                 console.error(err);
@@ -41,29 +39,24 @@ const GameContextProvider = ({ children }) => {
 
     const getNextGames = () => {
         setDoneNextGamesFetch(false);
-        fetch(nextGames)
+        fetch(games.next)
             .then(res => res.json())
             .then(({ results, next }) => {
                 setDoneNextGamesFetch(true);
-                addGamesToList(results);
-                setNextGames(next);
+                setGames({ results: [...games.results, ...results], next })
             })
             .catch((err) => {
                 console.error(err);
             })
     }
 
-    const addGamesToList = (nextGamesList) => {
-        setGames([...games, ...nextGamesList]);
-    }
-
     const getGameDetails = (gameId) => {
         setDoneDetailFetch(false);
         fetch(gameDetailsGet(gameId))
             .then(res => res.json())
-            .then(({ name, description, background_image }) => {
+            .then(({ name, description, background_image, released, genres }) => {
                 setDoneDetailFetch(true);
-                setGameDetail({ name, description, background_image });
+                setGameDetail({ name, description, background_image, released, genres });
             })
             .catch((err) => {
                 console.error(err);
@@ -73,8 +66,8 @@ const GameContextProvider = ({ children }) => {
     const searchGame = (gameName) => {
         fetch(searchGameGet(gameName))
             .then(res => res.json())
-            .then(({ results }) => {
-                setGames(results);
+            .then(({ results, next }) => {
+                setGames({results, next});
             })
             .catch(err => console.error(err));
     }

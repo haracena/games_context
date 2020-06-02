@@ -21,12 +21,14 @@ const SuggestedGames = ({ actualGame, changeActualGame }) => {
                         {
                             suggestedGames.map(game => {
                                 return (
-                                    <Col key={game['id']} md={6} lg={3} className='pt-2 pb-2'>
-                                        <div onClick={ () => changeActualGame(game['id']) }>
-                                            <Game
-                                                name={game['name']}
-                                                backgroundImage={game['background_image']}
-                                            />
+                                    <Col key={game.id} md={6} lg={3} className='pt-2 pb-2'>
+                                        <div onClick={ () => changeActualGame(game.id) }>
+                                            <Link to={`/game/details/${game.id}`}>
+                                                <Game
+                                                    name={game.name}
+                                                    backgroundImage={game.background_image}
+                                                />
+                                            </Link>
                                         </div>
                                     </Col>
                                 )

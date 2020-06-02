@@ -23,16 +23,26 @@ const Games = () => {
                     <div>
                         <Row>
                             {
-                                (games.map(game => (
-                                    <Col key={game['id']} md={6} lg={3} className='py-2'>
-                                        <Link to={`/game/details/${game['id']}`}>
-                                            <Game
-                                                name={game['name']}
-                                                backgroundImage={game['background_image']}
-                                            />
-                                        </Link>
+
+                                games.results.length > 0 ?
+                                    (games.results.map(game => (
+                                        <Col key={game.id} md={6} lg={3} className='py-2'>
+                                            <Link to={`/game/details/${game.id}`}>
+                                                <Game
+                                                    name={game.name}
+                                                    backgroundImage={game.background_image}
+                                                />
+                                            </Link>
+                                        </Col>
+                                    )))
+                                    :
+                                    <Col>
+                                        <span>
+                                            <strong>
+                                                no se han encontrado resultados para este juego
+                                        </strong>
+                                        </span>
                                     </Col>
-                                )))
                             }
                         </Row>
 
@@ -40,13 +50,17 @@ const Games = () => {
                             doneNextGamesFetch === false && <Loading />
                         }
 
-                        <Row>
-                            <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                                <div className='my-3'>
-                                    <Button onClick={loadNextGames} variant='dark'>Cargar más juegos</Button>
-                                </div>
-                            </Col>
-                        </Row>
+                        {
+                            games.next !== null &&
+                            <Row>
+                                <Col style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <div className='my-3'>
+                                        <Button onClick={loadNextGames} variant='dark'>Cargar más juegos</Button>
+                                    </div>
+                                </Col>
+                            </Row>
+                        }
+
                     </div>
                     :
                     <Loading />

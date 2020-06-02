@@ -15,14 +15,30 @@ const SearchForm = () => {
 
     const handleSubmit = (event) => {
         searchGame(textValue.trim());
-        event.preventDefault();
+        setTextValue('');
+    }
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            searchGame(textValue.trim());
+            setTextValue('');
+        }
     }
 
     return (
         <InputGroup>
-            <FormControl placeholder='Nombre del juego' onChange={handleChange} />
+            <FormControl 
+                placeholder='Nombre del juego'
+                onChange={handleChange}
+                onKeyPress={ handleKeyPress }
+                value={textValue} />
             <InputGroup.Append>
-                <Button onClick={handleSubmit} variant='dark' size='sm'>Buscar</Button>
+                <Button 
+                    onClick={ handleSubmit }
+                    variant='dark'
+                    size='sm'>
+                    Buscar
+                </Button>
             </InputGroup.Append>
         </InputGroup>
     );
